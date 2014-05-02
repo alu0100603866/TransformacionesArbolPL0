@@ -2,7 +2,8 @@ $(document).ready(function() {
   $('#parse').click(function() {
     try {
       var result = pl0.parse($('#input').val());
-      $('#output').html(JSON.stringify(result,undefined,2));
+      var processed = treeTransform(result);
+      $('#output').html(JSON.stringify(processed,undefined,2));
      
     
     } catch (e) {
