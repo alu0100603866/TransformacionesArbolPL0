@@ -55,7 +55,26 @@ function treeTransform (node) {
                 }
             }
             break;
-    
+        case 'PROC_CALL':
+            for (var i in node.arguments)
+                node.arguments[i] = treeTransform(node.arguments[i]);
+            break;
+        case 'IFELSE':
+            for (var i in node.sf)
+                node.sf[i] = treeTransform(node.sf[i]);
+            // Fall-through
+        case 'IF':
+        case 'WHILE':
+            node.cond = treeTransform(node.cond);
+            for (var i in node.st)
+                node.st[i] = treeTransform(node.st[i]);
+            break;
+        case 'ODD':
+            node.exp = treeTransform(node.exp);
+            break;
+        case 'ARGEXP':
+            node.content = treeTransform(node.content);
+            break;
     }
     
     return node;
